@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Projectile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tanks_scaffold</a> &gt; <a href="index.source.html" class="el_package">Tanks</a> &gt; <span class="el_source">Projectile.java</span></div><h1>Projectile.java</h1><pre class="source lang-java linenums">package Tanks;
+
+import processing.core.PApplet;
+
+/**
+ * The Projectile class represents a projectile fired by a tank.
+ * It handles the physics, drawing, and properties of the projectile.
+ */
+public class Projectile extends App {
+    private static final float GRAVITY = 3.6f;
+    float x, y; // Position
+    float vx, vy; // Velocity components
+    int color; // Color of the projectile
+    PApplet parent; // Reference to PApplet to draw on the canvas
+    public static final int CELLSIZE = 32; // Width of each cell in pixels
+    public static final int CELLHEIGHT = 32; // Height of each cell in pixels
+    public char firingPlayerIdentifier;
+    private float size;
+    private float radius; // Add radius field
+
+    /**
+     * Constructs a new Projectile instance.
+     *
+     * @param parent The PApplet instance.
+     * @param x The initial x position of the projectile.
+     * @param y The initial y position of the projectile.
+     * @param vx The initial horizontal velocity of the projectile.
+     * @param vy The initial vertical velocity of the projectile.
+     * @param color The color of the projectile.
+     * @param firingPlayerIdentifier The identifier of the player who fired the projectile.
+     * @param size The size of the projectile.
+     * @param radius The radius of the projectile.
+     */
+
+<span class="fc" id="L35">    public Projectile(PApplet parent, float x, float y, float vx, float vy, int color, char firingPlayerIdentifier, float size, float radius) {</span>
+<span class="fc" id="L36">        this.parent = parent;</span>
+<span class="fc" id="L37">        this.x = x;</span>
+<span class="fc" id="L38">        this.y = y;</span>
+<span class="fc" id="L39">        this.vx = vx;</span>
+<span class="fc" id="L40">        this.vy = vy;</span>
+<span class="fc" id="L41">        this.color = color;</span>
+<span class="fc" id="L42">        this.firingPlayerIdentifier = firingPlayerIdentifier;</span>
+<span class="fc" id="L43">        this.size = size;</span>
+<span class="fc" id="L44">        this.radius = radius; // Initialize radius</span>
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * Updates the position and velocity of the projectile based on gravity and wind.
+     */
+
+
+    void update() {
+<span class="fc" id="L53">        x += vx; // Update horizontal position</span>
+<span class="fc" id="L54">        y += vy; // Update vertical position</span>
+
+<span class="fc" id="L56">        vx += wind * 0.03; //Applies  Wind effect on the projectile</span>
+        // Apply gravity to the vertical velocity
+<span class="fc" id="L58">        vy += GRAVITY;</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Gets the x position of the projectile.
+     *
+     * @return The x position of the projectile.
+     */
+
+
+    public float getx(){
+<span class="fc" id="L69">        return this.x;</span>
+    }
+
+    /**
+     * Gets the y position of the projectile.
+     *
+     * @return The y position of the projectile.
+     */
+
+    public float gety(){
+<span class="fc" id="L79">        return this.y;</span>
+    }
+
+    /**
+     * Gets the radius of the projectile.
+     *
+     * @return The radius of the projectile.
+     */
+
+    public float getRadius() {
+<span class="fc" id="L89">        return this.radius;</span>
+    }
+
+    /**
+     * Gets the size of the projectile.
+     *
+     * @return The size of the projectile.
+     */
+
+    public float getSize() {
+<span class="fc" id="L99">        return this.size;</span>
+    }
+
+
+    /**
+     * Draws the projectile on the canvas.
+     */
+
+
+    public void draw() {
+<span class="fc" id="L109">        parent.noStroke();</span>
+<span class="fc" id="L110">        parent.fill(0); // Set color to black</span>
+<span class="nc" id="L111">        parent.ellipse(x, y, 14, 14); // Draw a slightly larger black ellipse</span>
+<span class="nc" id="L112">        parent.fill(color);</span>
+<span class="nc" id="L113">        parent.ellipse(x, y, 10, 10); // Draw the projectile</span>
+<span class="nc" id="L114">    }</span>
+
+    /**
+     * Checks if the projectile is offscreen.
+     *
+     * @return true if the projectile is offscreen, false otherwise.
+     */
+
+
+    boolean isOffscreen() {
+<span class="fc bfc" id="L124" title="All 8 branches covered.">        return x &lt; 0 || x &gt; parent.width || y &gt; parent.height || y &lt; 0; // Also check if y is less than 0</span>
+    }
+
+    
+
+ }
+    
+    
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

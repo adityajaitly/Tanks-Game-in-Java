@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Scoreboard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tanks_scaffold</a> &gt; <a href="index.source.html" class="el_package">Tanks</a> &gt; <span class="el_source">Scoreboard.java</span></div><h1>Scoreboard.java</h1><pre class="source lang-java linenums">package Tanks;
+
+import processing.core.PApplet;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * The Scoreboard class manages player scores and their corresponding colors.
+ * It provides methods to register players, update scores, reset scores, and draw the scoreboard.
+ */
+
+public class Scoreboard extends App {
+    private PApplet parent;
+    private Map&lt;Character, Integer&gt; scores;
+    private Map&lt;Character, Integer&gt; colors;
+
+    /**
+     * Constructs a new Scoreboard instance.
+     *
+     * @param parent The PApplet instance.
+     */
+
+<span class="fc" id="L24">    public Scoreboard(PApplet parent) {</span>
+<span class="fc" id="L25">        this.parent = parent;</span>
+<span class="fc" id="L26">        scores = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L27">        colors = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L28">        registerPlayer('A', parent.color(0, 0, 255)); </span>
+<span class="fc" id="L29">        registerPlayer('B', parent.color(255, 0, 0));  </span>
+<span class="fc" id="L30">        registerPlayer('C', parent.color(0, 255, 255));  </span>
+<span class="fc" id="L31">        registerPlayer('D', parent.color(255, 255, 0)); </span>
+<span class="fc" id="L32">    }</span>
+
+    /**
+     * Registers a player with a given identifier and color.
+     *
+     * @param playerIdentifier The identifier for the player.
+     * @param color The color associated with the player.
+     */
+
+    public void registerPlayer(char playerIdentifier, int color) {
+<span class="fc" id="L42">        scores.put(playerIdentifier, 0);  // Initialize score as 0</span>
+<span class="fc" id="L43">        colors.put(playerIdentifier, color);</span>
+        
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * Updates the score for a given player.
+     *
+     * @param playerIdentifier The identifier for the player.
+     * @param score The score to add to the player's current score.
+     */
+
+    public void updateScore(char playerIdentifier, int score) {
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (scores.containsKey(playerIdentifier)) {</span>
+<span class="fc" id="L56">            scores.put(playerIdentifier, scores.get(playerIdentifier) + score);</span>
+            
+        }
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Gets the score for a given player.
+     *
+     * @param playerIdentifier The identifier for the player.
+     * @return The score for the player, or 0 if the player is not found.
+     */
+
+    public int getScore(char playerIdentifier) {
+<span class="fc" id="L69">        return scores.getOrDefault(playerIdentifier, 0); // Return the score for the player or 0 if not found</span>
+    }
+
+    /**
+     * Gets the map of all player scores.
+     *
+     * @return A map of player identifiers to their scores.
+     */
+    
+    public Map&lt;Character, Integer&gt; getScores() {
+<span class="fc" id="L79">        return scores;</span>
+    }
+
+    /**
+     * Gets the color associated with a given player.
+     *
+     * @param playerIdentifier The identifier for the player.
+     * @return The color associated with the player, or white if the player is not found.
+     */
+
+    public int getColor(char playerIdentifier) {
+<span class="fc" id="L90">        return colors.getOrDefault(playerIdentifier, parent.color(255)); // Default to white if not found</span>
+    }
+
+    /**
+     * Resets all player scores to 0.
+     */
+
+    public void resetScores() {
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        for (Character player : scores.keySet()) {</span>
+<span class="fc" id="L99">            scores.put(player, 0);</span>
+<span class="fc" id="L100">        }</span>
+<span class="fc" id="L101">    }</span>
+
+    /**
+     * Draws the scoreboard on the screen.
+     */
+
+    
+    public void draw() {
+<span class="fc" id="L109">        int startX = parent.width - 190;  // Position the scoreboard on the right side</span>
+<span class="fc" id="L110">        int startY = 80;  </span>
+<span class="fc" id="L111">        int boxWidth = 180;</span>
+<span class="fc" id="L112">        int boxHeight = 120;</span>
+    
+<span class="fc" id="L114">        parent.fill(240, 240, 240, 0);  // Semi-transparent white background</span>
+<span class="fc" id="L115">        parent.stroke(0);  // Black border</span>
+<span class="fc" id="L116">        parent.strokeWeight(4);</span>
+<span class="fc" id="L117">        parent.rect(startX, startY, boxWidth, boxHeight);</span>
+    
+<span class="fc" id="L119">        parent.textSize(16);</span>
+<span class="fc" id="L120">        parent.fill(0);  // Black text color</span>
+<span class="fc" id="L121">        parent.text(&quot;Scores&quot;, startX + 10, startY + 20);</span>
+    
+        // Correct line coordinates
+<span class="fc" id="L124">        parent.line(startX, startY + 30, startX + boxWidth, startY + 30);  // Ensures line is straight and matches box width</span>
+    
+<span class="fc" id="L126">        int textY = startY + 50;  // Adjust textY to place text under the line</span>
+    
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        for (Map.Entry&lt;Character, Integer&gt; entry : scores.entrySet()) {</span>
+<span class="fc" id="L129">            parent.fill(colors.get(entry.getKey()));  // Use stored color for each player</span>
+<span class="fc" id="L130">            String scoreText = &quot;Player &quot; + entry.getKey() + &quot;: &quot; + entry.getValue();</span>
+<span class="fc" id="L131">            parent.text(scoreText, startX + 10, textY);</span>
+<span class="fc" id="L132">            textY += 20;  // Increment Y position for next score</span>
+<span class="fc" id="L133">        }</span>
+<span class="fc" id="L134">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

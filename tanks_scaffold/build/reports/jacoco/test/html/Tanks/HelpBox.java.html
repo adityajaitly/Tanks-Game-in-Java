@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HelpBox.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tanks_scaffold</a> &gt; <a href="index.source.html" class="el_package">Tanks</a> &gt; <span class="el_source">HelpBox.java</span></div><h1>HelpBox.java</h1><pre class="source lang-java linenums">package Tanks;
+
+import processing.core.PApplet;
+
+/**
+ * The HelpBox class represents a help box in the game, which displays instructions and controls to the player.
+ * It can be toggled between a collapsed and an expanded state.
+ */
+
+public class HelpBox extends App {
+    private PApplet parent;
+    private boolean isExpanded;
+    private int boxX, boxY, boxWidth, boxHeight;
+    private int expandedWidth, expandedHeight;
+    private int expandedX, expandedY;
+
+    /**
+     * Constructs a new HelpBox instance.
+     *
+     * @param parent The PApplet instance.
+     */
+
+
+<span class="fc" id="L24">    public HelpBox(PApplet parent) {</span>
+<span class="fc" id="L25">        this.parent = parent;</span>
+<span class="fc" id="L26">        this.isExpanded = false;</span>
+<span class="fc" id="L27">        this.boxX = parent.width - 75; // Adjusted position</span>
+<span class="fc" id="L28">        this.boxY = 18;</span>
+<span class="fc" id="L29">        this.boxWidth = 50;</span>
+<span class="fc" id="L30">        this.boxHeight = 25; // Reduced height</span>
+<span class="fc" id="L31">        this.expandedWidth = parent.width - 75;</span>
+<span class="fc" id="L32">        this.expandedHeight = parent.height - 215 ;</span>
+<span class="fc" id="L33">        this.expandedX = (parent.width - expandedWidth) / 2 - 20;</span>
+<span class="fc" id="L34">        this.expandedY = (parent.height - expandedHeight) / 2 + 45;</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Draws the help box on the canvas.
+     * Displays different content based on whether the box is expanded or collapsed.
+     */
+
+    public void draw() {
+<span class="fc" id="L43">        parent.fill(250); // Set fill color to white</span>
+<span class="fc" id="L44">        parent.stroke(0);</span>
+<span class="fc" id="L45">        parent.strokeWeight(2);</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (isExpanded) {</span>
+            // Drawing the expanded rectangle
+<span class="nc" id="L48">            parent.rect(expandedX, expandedY, expandedWidth, expandedHeight);</span>
+<span class="nc" id="L49">            parent.textSize(16);</span>
+<span class="nc" id="L50">            parent.fill(0);</span>
+<span class="nc" id="L51">            parent.text(&quot;HELP&quot;, expandedX + expandedWidth / 2 , expandedY + 20);</span>
+<span class="nc" id="L52">            parent.text(&quot;WELCOME TO THE GAME 'TANKS' &quot;, expandedX + 10 , expandedY + 30);</span>
+<span class="nc" id="L53">            parent.text(&quot;THIS GAME IS BEING IMPLEMENTED AT A HARD DIFFICULTY &quot;, expandedX + 10 , expandedY + 55);</span>
+<span class="nc" id="L54">            parent.text(&quot;GOOD LUCK , MAY THE BEST 'TANK' WIN &quot;, expandedX + 10 , expandedY + 80);</span>
+<span class="nc" id="L55">            parent.text(&quot;Controls:\n- Move Right: Right Arrow\n- Move Left: Left Arrow\n- Change Angle: Up/Down Arrow\n- Fire: Spacebar\n- Increase Power: W\n- Decrease Power: S\n- Repair (cost 20): R\n- Fuel (cost 10): F\n- Parachute (cost 15): P\n- Larger Projectile (cost 20) : X&quot;, expandedX + 10, expandedY +115);</span>
+<span class="nc" id="L56">            parent.text(&quot;CLICK ANYWHERE INSIDE THE HELP BOX TO EXIT&quot;, expandedX + 10, expandedY + 405);</span>
+
+        } else {
+            // Drawing the collapsed rectangle
+<span class="fc" id="L60">            parent.rect(boxX, boxY, boxWidth, boxHeight);</span>
+<span class="fc" id="L61">            parent.textSize(16);</span>
+<span class="fc" id="L62">            parent.fill(0);</span>
+<span class="fc" id="L63">            parent.text(&quot;HELP&quot;, boxX + boxWidth / 2 - 18, boxY + boxHeight / 2 + 7);</span>
+
+        }
+        
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * Toggles the state of the help box between expanded and collapsed.
+     * Adjusts the position and size of the box accordingly.
+     */
+
+    public void toggle() {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        isExpanded = !isExpanded;</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (isExpanded) {</span>
+<span class="fc" id="L77">            boxX = (parent.width - expandedWidth) / 2;</span>
+<span class="fc" id="L78">            boxY = (parent.height - expandedHeight) / 2;</span>
+
+        } else {
+            // Revert box position and size when collapsed
+<span class="fc" id="L82">            boxX = parent.width - 75;</span>
+<span class="fc" id="L83">            boxY = 18;</span>
+        }
+<span class="fc" id="L85">    }</span>
+
+    /**
+     * Checks if the given mouse coordinates are inside the help box.
+     *
+     * @param mouseX The x-coordinate of the mouse.
+     * @param mouseY The y-coordinate of the mouse.
+     * @return true if the mouse coordinates are inside the help box, false otherwise.
+     */
+
+    public boolean isInside(int mouseX, int mouseY) {
+<span class="pc bpc" id="L96" title="3 of 12 branches missed.">        return mouseX &gt;= boxX &amp;&amp; mouseX &lt;= boxX + (isExpanded ? expandedWidth : boxWidth) &amp;&amp; mouseY &gt;= boxY &amp;&amp; mouseY &lt;= boxY + (isExpanded ? expandedHeight : boxHeight);</span>
+    }
+
+    /**
+     * Checks if the help box is expanded.
+     *
+     * @return {@code true} if the help box is expanded, {@code false} otherwise.
+     */
+
+    public boolean isExpanded() {
+<span class="fc" id="L106">        return isExpanded;</span>
+    }
+
+    /**
+     * Gets the expanded width of the help box.
+     *
+     * @return The expanded width in pixels.
+     */
+
+    public int getExpandedWidth() {
+<span class="fc" id="L116">        return expandedWidth;</span>
+    }
+
+    /**
+     * Gets the expanded height of the help box.
+     *
+     * @return The expanded height in pixels.
+     */
+
+    public int getExpandedHeight() {
+<span class="fc" id="L126">        return expandedHeight;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
